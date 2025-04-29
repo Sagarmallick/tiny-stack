@@ -4,6 +4,7 @@ import connectToDatabase from "./database/mongodb.js";
 import authRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middleware/error.middleware.js";
+import templateRouter from "./routes/template.route.js";
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(cookieParser());
 
 //diiferent  routes
 app.use("/api/v1/auth", authRouter);
-
+app.use("/api/v1/templates", templateRouter);
 app.get("/", (req, res) => {
   res.send("welcome to tiny-stack");
 });
