@@ -10,4 +10,6 @@ export const {
   JWT_SECRET,
   STRIPE_SECRET_KEY,
   STRIPE_WEBHOOK_SECRET,
+  EMAIL_USER,
+  EMAIL_PASS,
 } = process.env;

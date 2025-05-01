@@ -17,27 +17,4 @@ stripe ➔ Payment processing
 cors ➔ Allow cross-origin frontend requests
 nodemon ➔ Auto-restart server during development
 
-tiny-stack/
-│
-├── config/
-│ └── db.js # MongoDB connection
-├── controllers/
-│ └── authController.js
-│ └── templateController.js
-│ └── paymentController.js
-├── middleware/
-│ └── authMiddleware.js
-│ └── errorMiddleware.js
-├── models/
-│ └── User.js
-│ └── Template.js
-│ └── Order.js
-├── routes/
-│ └── authRoutes.js
-│ └── templateRoutes.js
-│ └── paymentRoutes.js
-├── uploads/
-│ └── (uploaded template files here)
-├── .env
-├── server.js
-└── package.json
+stripe listen --forward-to localhost:5001/api/webhook/stripe

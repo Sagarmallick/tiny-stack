@@ -1,6 +1,8 @@
 import Stripe from "stripe";
 import { STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET } from "../config/env.js";
 import Purchase from "../models/purchase.model.js";
+import User from "../models/user.model.js"; // ✅ Add this
+import sendConfirmationEmail from "../utils/sendMail.js"; // ✅ Add this
 
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 
@@ -33,11 +35,18 @@ export const handleStripeWebhook = async (req, res) => {
       if (!alreadyExists) {
         await Purchase.create({ buyer: userId, template: templateId });
         console.log("✅ Purchase saved to database");
+
+        const user = await User.findById(userId);
+        if (user && user.email) {
+          await sendConfirmationEmail(user.email, templateId);
+        } else {
+          console.log("⚠️ User not found or email missing");
+        }
       } else {
         console.log("ℹ️ Purchase already recorded");
       }
     } catch (err) {
-      console.error("❌ Failed to record purchase:", err.message);
+      console.error("❌ Failed to record purchase or send email:", err.message);
     }
   }
 
